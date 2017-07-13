@@ -83,3 +83,19 @@ class CategoryView(ListView):
     def get_queryset(self):
         cate = get_object_or_404(Category, pk=self.kwargs.get('pk'))
         return super(CategoryView, self).get_queryset().filter(category=cate)
+
+
+class ArchivesView(ListView):
+    """
+    归档通用视图
+    """
+    model = Post
+    template_name = 'blog/index.html'
+    context_object_name = 'post_list'
+
+    def get_queryset(self):
+        # post_list = Post.objects.filter(created_time__year=self.kwargs.get('year'),
+        #                             created_time__month=self.kwargs.get('month')
+        #                             )
+        return super(ArchivesView, self).get_queryset().filter(created_time__year=self.kwargs.get('year'),
+        created_time__month=self.kwargs.get('month'))
